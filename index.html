@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .login-container { max-width: 400px; margin: 5% auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .portal { display: none; padding: 20px; }
+        .menu { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .menu button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .menu button:hover { background: #0056b3; }
+        .section { display: none; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .admin-controls { display: none; }
+        .user-view { display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f8f9fa; }
+        .btn-sm { margin: 2px; }
+        .form-check { margin-right: 10px; }
+        .fee-months { display: flex; flex-wrap: wrap; gap: 10px; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="text-center mb-4"><i class="fas fa-school"></i> School Portal Login</h2>
+        <form id="loginForm">
+            <div class="mb-3">
+                <input type="password" id="password" class="form-control" placeholder="Enter Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        <div id="error" class="alert alert-danger mt-3" style="display: none;">Invalid password. Try 'admin123' for admin or 'user123' for user.</div>
+    </div>
+
+    <div class="portal container" id="portal">
+        <h2 class="text-center mb-4"><i class="fas fa-graduation-cap"></i> Welcome to School Portal</h2>
+        <p class="text-center">Role: <span id="role" class="badge bg-secondary"></span></p>
+        <div class="menu">
+            <button onclick="showSection('newAdmission')"><i class="fas fa-user-plus"></i> New Admission</button>
+            <button onclick="showSection('remainingAdmission')"><i class="fas fa-clock"></i> Remaining Admission</button>
+            <button onclick="showSection('teacherSalary')"><i class="fas fa-money-bill-wave"></i> Teacher Salary</button>
+            <button onclick="showSection('skipVoucher')"><i class="fas fa-receipt"></i> Skip Voucher Students</button>
+        </div>
+
+        <div class="section" id="newAdmission">
+            <h3><i class="fas fa-user-plus"></i> New Admission Details</h3>
+            <div class="admin-controls">
+                <form id="admissionForm" class="mb-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Student Name:</label>
+                            <input type="text" id="studentName" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Father Name:</label>
+                            <input type="text" id="fatherName" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label>Class:</label>
+                            <select id="class" class="form-control" required>
+                                <option value="">Select Class</option>
+                                <option value="P.G">P.G</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Amount:</label>
+                            <input type="number" id="amount" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Remaining Amount:</label>
+                            <input type="number" id="remainingAmount" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Fee Months Paid:</label>
+                        <div class="fee-months">
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="January"> <label class="form-check-label">Jan</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="February"> <label class="form-check-label">Feb</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="March"> <label class="form-check-label">Mar</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="April"> <label class="form-check-label">Apr</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="May"> <label class="form-check-label">May</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="June"> <label class="form-check-label">Jun</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="July"> <label class="form-check-label">Jul</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="August"> <label class="form-check-label">Aug</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="September"> <label class="form-check-label">Sep</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="October"> <label class="form-check-label">Oct</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="November"> <label class="form-check-label">Nov</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="December"> <label class="form-check-label">Dec</label></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Date:</label>
+                        <input type="date" id="date" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Save Admission</button>
+                </form>
+                <h4>Admission List</h4>
+                <table id="admissionTable">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Father Name</th>
+                            <th>Class</th>
+                            <th>Amount</th>
+                            <th>Remaining</th>
+                            <th>Fee Months</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="user-view">
+                <p>View new admission information.</p>
+                <div id="admissionDisplay"></div>
+            </div>
+        </div>
+
+        <div class="section" id="remainingAdmission">
+            <h3><i class="fas fa-clock"></i> Remaining Admission Details</h3>  <!-- Added icon and heading like New Admission -->
+            <div class="admin-controls">
+                <form id="remainingAdmissionForm" class="mb-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Student Name:</label>
+                            <input type="text" id="remStudentName" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Father Name:</label>
+                            <input type="text" id="remFatherName" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label>Class:</label>
+                            <select id="remClass" class="form-control" required>
+                                <option value="">Select Class</option>
+                                <option value="P.G">P.G</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Remaining Amount:</label>
+                            <input type="number" id="remRemainingAmount" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Admission Date:</label>
+                            <input type="date" id="remAdmissionDate" class="form-control" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Save Remaining Admission</button>
+                </form>
+                <h4>Remaining Admission List</h4>
+                <table id="remainingAdmissionTable">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Father Name</th>
+                            <th>Class</th>
+                            <th>Remaining Amount</th>
+                            <th>Admission Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="user-view">
+                <p>View remaining admission information.</p>
+                <div id="remainingAdmissionDisplay"></div>
+            </div>
+        </div>
+
+        <div class="section" id="teacherSalary">
+            <h3><i class="fas fa-money-bill-wave"></i> Teacher Salary Details</h3>
+            <div class="admin-controls">
+                <form id="teacherSalaryForm" class="mb-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Teacher Name:</label>
+                            <input type="text" id="teacherName" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Salary Deduct Amount:</label>
+                            <input type="number" id="salaryDeductAmount" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Joining Date:</label>
+                            <input type="date" id="joiningDate" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Left Date:</label>
+                            <input type="date" id="leftDate" class="form-control">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Save Teacher Salary Details</button>
+                </form>
+                <h4>Teacher Salary List</h4>
+                <table id="teacherSalaryTable">
+                    <thead>
+                        <tr>
+                            <th>Teacher Name</th>
+                            <th>Salary Deduct Amount</th>
+                            <th>Joining Date</th>
+                            <th>Left Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="user-view">
+                <p>View teacher salary information.</p>
+                <div id="teacherSalaryDisplay"></div>
+            </div>
+        </div>
+
+        <div class="section" id="skipVoucher">
+            <h3><i class="fas fa-receipt"></i> Skip Voucher Students Details</h3>
+            <div class="admin-controls">
+                <form id="skipVoucherForm" class="mb-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Student Name:</label>
+                            <input type="text" id="svStudentName" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Class:</label>
+                            <select id="svClass" class="form-control" required>
+                                <option value="">Select Class</option>
+                                <option value="P.G">P.G</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Paid Months:</label>
+                        <div class="fee-months">
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="January"> <label class="form-check-label">Jan</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="February"> <label class="form-check-label">Feb</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="March"> <label class="form-check-label">Mar</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="April"> <label class="form-check-label">Apr</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="May"> <label class="form-check-label">May</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="June"> <label class="form-check-label">Jun</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="July"> <label class="form-check-label">Jul</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="August"> <label class="form-check-label">Aug</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="September"> <label class="form-check-label">Sep</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="October"> <label class="form-check-label">Oct</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="November"> <label class="form-check-label">Nov</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="December"> <label class="form-check-label">Dec</label></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Paid Date:</label>
+                        <input type="date" id="paidDate" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Save Skip Voucher Student</button>
+                </form>
+                <h4>Skip Voucher Students List</h4>
+                <table id="skipVoucherTable">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Class</th>
+                            <th>Paid Months</th>
+                            <th>Paid Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="user-view">
+                <p>View skip voucher students information.</p>
+                <div id="skipVoucherDisplay"></div>
+                    </div>
+
+        <button onclick="logout()" class="btn btn-danger mt-3">Logout</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const adminPassword = 'admin123';
+        const userPassword = 'user123';
+        let currentRole = '';
+
+        // Load data from localStorage
+        let admissions = JSON.parse(localStorage.getItem('admissions')) || [];
+        let remainingAdmissions = JSON.parse(localStorage.getItem('remainingAdmissions')) || [];
+        let teacherSalaries = JSON.parse(localStorage.getItem('teacherSalaries')) || [];
+        let skipVouchers = JSON.parse(localStorage.getItem('skipVouchers')) || [];
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            if (password === adminPassword) {
+                currentRole = 'Admin';
+                showPortal();
+                showAdminControls();
+            } else if (password === userPassword) {
+                currentRole = 'User';
+                showPortal();
+                showUserViews();
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
+        });
+
+        function showPortal() {
+            document.getElementById('portal').style.display = 'block';
+            document.querySelector('.login-container').style.display = 'none';
+            document.getElementById('role').textContent = currentRole;
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+            loadData(sectionId);
+        }
+
+        function showAdminControls() {
+            document.querySelectorAll('.admin-controls').forEach(c => c.style.display = 'block');
+        }
+
+        function showUserViews() {
+            document.querySelectorAll('.user-view').forEach(v => v.style.display = 'block');
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        // Admissions
+        document.getElementById('admissionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                studentName: document.getElementById('studentName').value,
+                fatherName: document.getElementById('fatherName').value,
+                class: document.getElementById('class').value,
+                amount: document.getElementById('amount').value,
+                remainingAmount: document.getElementById('remainingAmount').value,
+                feeMonths: Array.from(document.querySelectorAll('input[name="feeMonth"]:checked')).map(cb => cb.value).join(', '),
+                date: document.getElementById('date').value
+            };
+            admissions.push(data);
+            localStorage.setItem('admissions', JSON.stringify(admissions));
+            loadAdmissions();
+            this.reset();
+        });
+
+        function loadAdmissions() {
+            const tbody = document.querySelector('#admissionTable tbody');
+            tbody.innerHTML = '';
+            admissions.forEach((ad, index) => {
+                const row = `<tr>
+                    <td>${ad.studentName}</td>
+                    <td>${ad.fatherName}</td>
+                    <td>${ad.class}</td>
+                    <td>${ad.amount}</td>
+                    <td>${ad.remainingAmount}</td>
+                    <td>${ad.feeMonths}</td>
+                    <td>${ad.date}</td>
+                    <td>
+                        ${currentRole === 'Admin' ? `<button class="btn btn-warning btn-sm" onclick="editAdmission(${index})">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteAdmission(${index})">Delete</button>` : ''}
+                    </td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+            // For user view
+            const display = document.getElementById('admissionDisplay');
+            display.innerHTML = admissions.length ? admissions.map(ad => `<p><strong>Student:</strong> ${ad.studentName}, <strong>Class:</strong> ${ad.class}, <strong>Amount:</strong> ${ad.amount}</p>`).join('') : '<p>No data available.</p>';
+        }
+
+        function editAdmission(index) {
+            const ad = admissions[index];
+            document.getElementById('studentName').value = ad.studentName;
+            document.getElementById('fatherName').value = ad.fatherName;
+            document.getElementById('class').value = ad.class;
+            document.getElementById('amount').value = ad.amount;
+            document.getElementById('remainingAmount').value = ad.remainingAmount;
+            document.getElementById('date').value = ad.date;
+            // Note: For checkboxes, you may need to split ad.feeMonths and check them
+            admissions.splice(index, 1);
+            localStorage.setItem('admissions', JSON.stringify(admissions));
+        }
+
+        function deleteAdmission(index) {
+            admissions.splice(index, 1);
+            localStorage.setItem('admissions', JSON.stringify(admissions));
+            loadAdmissions();
+        }
+
+        // Remaining Admissions
+        document.getElementById('remainingAdmissionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                studentName: document.getElementById('remStudentName').value,
+                fatherName: document.getElementById('remFatherName').value,
+                class: document.getElementById('remClass').value,
+                remainingAmount: document.getElementById('remRemainingAmount').value,
+                admissionDate: document.getElementById('remAdmissionDate').value
+            };
+            remainingAdmissions.push(data);
+            localStorage.setItem('remainingAdmissions', JSON.stringify(remainingAdmissions));
+            loadRemainingAdmissions();
+            this.reset();
+        });
+
+        function loadRemainingAdmissions() {
+            const tbody = document.querySelector('#remainingAdmissionTable tbody');
+            tbody.innerHTML = '';
+            remainingAdmissions.forEach((ad, index) => {
+                const row = `<tr>
+                    <td>${ad.studentName}</td>
+                    <td>${ad.fatherName}</td>
+                    <td>${ad.class}</td>
+                    <td>${ad.remainingAmount}</td>
+                    <td>${ad.admissionDate}</td>
+                    <td>
+                        ${currentRole === 'Admin' ? `<button class="btn btn-warning btn-sm" onclick="editRemainingAdmission(${index})">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteRemainingAdmission(${index})">Delete</button>` : ''}
+                    </td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+            // For user view
+            const display = document.getElementById('remainingAdmissionDisplay');
+            display.innerHTML = remainingAdmissions.length ? remainingAdmissions.map(ad => `<p><strong>Student:</strong> ${ad.studentName}, <strong>Class:</strong> ${ad.class}, <strong>Remaining:</strong> ${ad.remainingAmount}</p>`).join('') : '<p>No data available.</p>';
+        }
+
+        function editRemainingAdmission(index) {
+            const ad = remainingAdmissions[index];
+            document.getElementById('remStudentName').value = ad.studentName;
+            document.getElementById('remFatherName').value = ad.fatherName;
+            document.getElementById('remClass').value = ad.class;
+            document.getElementById('remRemainingAmount').value = ad.remainingAmount;
+            document.getElementById('remAdmissionDate').value = ad.admissionDate;
+            remainingAdmissions.splice(index, 1);
+            localStorage.setItem('remainingAdmissions', JSON.stringify(remainingAdmissions));
+        }
+
+        function deleteRemainingAdmission(index) {
+            remainingAdmissions.splice(index, 1);
+            localStorage.setItem('remainingAdmissions', JSON.stringify(remainingAdmissions));
+            loadRemainingAdmissions();
+        }
+
+        // Teacher Salaries
+        document.getElementById('teacherSalaryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                teacherName: document.getElementById('teacherName').value,
+                salaryDeductAmount: document.getElementById('salaryDeductAmount').value,
+                joiningDate: document.getElementById('joiningDate').value,
+                leftDate: document.getElementById('leftDate').value
+            };
+            teacherSalaries.push(data);
+            localStorage.setItem('teacherSalaries', JSON.stringify(teacherSalaries));
+            loadTeacherSalaries();
+            this.reset();
+        });
+
+        function loadTeacherSalaries() {
+            const tbody = document.querySelector('#teacherSalaryTable tbody');
+            tbody.innerHTML = '';
+            teacherSalaries.forEach((ts, index) => {
+                const row = `<tr>
+                    <td>${ts.teacherName}</td>
+                    <td>${ts.salaryDeductAmount}</td>
+                    <td>${ts.joiningDate}</td>
+                    <td>${ts.leftDate || 'N/A'}</td>
+                    <td>
+                        ${currentRole === 'Admin' ? `<button class="btn btn-warning btn-sm" onclick="editTeacherSalary(${index})">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteTeacherSalary(${index})">Delete</button>` : ''}
+                    </td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+            // For user view
+            const display = document.getElementById('teacherSalaryDisplay');
+            display.innerHTML = teacherSalaries.length ? teacherSalaries.map(ts => `<p><strong>Teacher:</strong> ${ts.teacherName}, <strong>Deduct:</strong> ${ts.salaryDeductAmount}</p>`).join('') : '<p>No data available.</p>';
+        }
+
+        function editTeacherSalary(index) {
+            const ts = teacherSalaries[index];
+            document.getElementById('teacherName').value = ts.teacherName;
+            document.getElementById('salaryDeductAmount').value = ts.salaryDeductAmount;
+            document.getElementById('joiningDate').value = ts.joiningDate;
+            document.getElementById('leftDate').value = ts.leftDate;
+            teacherSalaries.splice(index, 1);
+            localStorage.setItem('teacherSalaries', JSON.stringify(teacherSalaries));
+        }
+
+        function deleteTeacherSalary(index) {
+            teacherSalaries.splice(index, 1);
+            localStorage.setItem('teacherSalaries', JSON.stringify(teacherSalaries));
+            loadTeacherSalaries();
+        }
+
+        // Skip Vouchers
+        document.getElementById('skipVoucherForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                studentName: document.getElementById('svStudentName').value,
+                class: document.getElementById('svClass').value,
+                paidMonths: Array.from(document.querySelectorAll('input[name="paidMonth"]:checked')).map(cb => cb.value).join(', '),
+                paidDate: document.getElementById('paidDate').value
+            };
+            skipVouchers.push(data);
+            localStorage.setItem('skipVouchers', JSON.stringify(skipVouchers));
+            loadSkipVouchers();
+            this.reset();
+        });
+
+        function loadSkipVouchers() {
+            const tbody = document.querySelector('#skipVoucherTable tbody');
+            tbody.innerHTML = '';
+            skipVouchers.forEach((sv, index) => {
+                const row = `<tr>
+                    <td>${sv.studentName}</td>
+                    <td>${sv.class}</td>
+                    <td>${sv.paidMonths}</td>
+                    <td>${sv.paidDate}</td>
+                    <td>
+                        ${currentRole === 'Admin' ? `<button class="btn btn-warning btn-sm" onclick="editSkipVoucher(${index})">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteSkipVoucher(${index})">Delete</button>` : ''}
+                    </td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+            // For user view
+            const display = document.getElementById('skipVoucherDisplay');
+            display.innerHTML = skipVouchers.length ? skipVouchers.map(sv => `<p><strong>Student:</strong> ${sv.studentName}, <strong>Class:</strong> ${sv.class}, <strong>Paid Months:</strong> ${sv.paidMonths}</p>`).join('') : '<p>No data available.</p>';
+        }
+
+        function editSkipVoucher(index) {
+            const sv = skipVouchers[index];
+            document.getElementById('svStudentName').value = sv.studentName;
+            document.getElementById('svClass').value = sv.class;
+            document.getElementById('paidDate').value = sv.paidDate;
+            // Note: For checkboxes, you may need to split sv.paidMonths and check them
+            skipVouchers.splice(index, 1);
+            localStorage.setItem('skipVouchers', JSON.stringify(skipVouchers));
+        }
+
+        function deleteSkipVoucher(index) {
+            skipVouchers.splice(index, 1);
+            localStorage.setItem('skipVouchers', JSON.stringify(skipVouchers));
+            loadSkipVouchers();
+        }
+
+        function loadData(sectionId) {
+            if (sectionId === 'newAdmission') loadAdmissions();
+            else if (sectionId === 'remainingAdmission') loadRemainingAdmissions();
+            else if (sectionId === 'teacherSalary') loadTeacherSalaries();
+            else if (sectionId === 'skipVoucher') loadSkipVouchers();
+        }
+    </script>
+</body>
+</html>
