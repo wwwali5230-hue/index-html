@@ -7,26 +7,102 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .login-container { max-width: 400px; margin: 5% auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .portal { display: none; padding: 20px; }
-        .menu { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-        .menu button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
-        .menu button:hover { background: #0056b3; }
-        .section { display: none; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        body { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            min-height: 100vh;
+        }
+        .login-container { 
+            max-width: 400px; 
+            margin: 5% auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); 
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .portal { 
+            display: none; 
+            padding: 20px; 
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .menu { 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            margin-bottom: 30px; 
+        }
+        .menu button { 
+            background: linear-gradient(45deg, #007bff, #0056b3); 
+            color: white; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .menu button:hover { 
+            background: linear-gradient(45deg, #0056b3, #004085); 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        .section { 
+            display: none; 
+            background: white; 
+            padding: 25px; 
+            border-radius: 15px; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15); 
+            margin-bottom: 20px; 
+            animation: fadeIn 0.5s ease-in-out;
+        }
         .admin-controls { display: none; }
         .user-view { display: none; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background-color: #f8f9fa; }
-        .btn-sm { margin: 2px; }
-        .form-check { margin-right: 10px; }
-        .fee-months { display: flex; flex-wrap: wrap; gap: 10px; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 12px; 
+            text-align: left; 
+        }
+        th { 
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef); 
+            font-weight: bold; 
+            color: #495057;
+        }
+        tbody tr:hover { background-color: #f1f3f4; }
+        .btn-sm { 
+            margin: 2px; 
+            border-radius: 5px;
+        }
+        .logout-btn { 
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+            z-index: 1000;
+        }
+        .no-data { 
+            text-align: center; 
+            color: #6c757d; 
+            font-style: italic; 
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h2 class="text-center mb-4"><i class="fas fa-school"></i> School Portal Login</h2>
+        <h2 class="text-center mb-4"><i class="fas fa-school"></i> Piran Ghaib School Data</h2>
         <form id="loginForm">
             <div class="mb-3">
                 <input type="password" id="password" class="form-control" placeholder="Enter Password" required>
@@ -89,24 +165,51 @@
                     </div>
                     <div class="mb-3">
                         <label>Fee Months Paid:</label>
-                        <div class="fee-months">
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="January"> <label class="form-check-label">Jan</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="February"> <label class="form-check-label">Feb</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="March"> <label class="form-check-label">Mar</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="April"> <label class="form-check-label">Apr</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="May"> <label class="form-check-label">May</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="June"> <label class="form-check-label">Jun</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="July"> <label class="form-check-label">Jul</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="August"> <label class="form-check-label">Aug</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="September"> <label class="form-check-label">Sep</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="October"> <label class="form-check-label">Oct</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="November"> <label class="form-check-label">Nov</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="feeMonth" value="December"> <label class="form-check-label">Dec</label></div>
-                        </div>
+                        <select id="feeMonths" class="form-control" multiple required>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Year:</label>
+                        <select id="admissionYear" class="form-control" required>
+                            <option value="">Select Year</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                            <option value="2031">2031</option>
+                            <option value="2032">2032</option>
+                            <option value="2033">2033</option>
+                            <option value="2034">2034</option>
+                            <option value="2035">2035</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label>Date:</label>
                         <input type="date" id="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Admission Type:</label><br>
+                        <input type="checkbox" id="fullPaid" name="admissionType"> Full Admission Paid<br>
+                        <input type="checkbox" id="remaining" name="admissionType"> Remaining Admission
                     </div>
                     <button type="submit" class="btn btn-success">Save Admission</button>
                 </form>
@@ -120,6 +223,7 @@
                             <th>Amount</th>
                             <th>Remaining</th>
                             <th>Fee Months</th>
+                            <th>Year</th>
                             <th>Date</th>
                             <th>Actions</th>
                         </tr>
@@ -128,13 +232,27 @@
                 </table>
             </div>
             <div class="user-view">
-                <p>View new admission information.</p>
-                <div id="admissionDisplay"></div>
+                <h4>New Admission List</h4>
+                <table id="admissionUserTable">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Father Name</th>
+                            <th>Class</th>
+                            <th>Amount</th>
+                            <th>Remaining</th>
+                            <th>Fee Months</th>
+                            <th>Year</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
 
         <div class="section" id="remainingAdmission">
-            <h3><i class="fas fa-clock"></i> Remaining Admission Details</h3>  <!-- Added icon and heading like New Admission -->
+            <h3><i class="fas fa-clock"></i> Remaining Admission Details</h3>
             <div class="admin-controls">
                 <form id="remainingAdmissionForm" class="mb-4">
                     <div class="row">
@@ -192,8 +310,19 @@
                 </table>
             </div>
             <div class="user-view">
-                <p>View remaining admission information.</p>
-                <div id="remainingAdmissionDisplay"></div>
+                <h4>Remaining Admission List</h4>
+                <table id="remainingAdmissionUserTable">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Father Name</th>
+                            <th>Class</th>
+                            <th>Remaining Amount</th>
+                            <th>Admission Date</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
 
@@ -217,9 +346,44 @@
                             <input type="date" id="joiningDate" class="form-control" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label>Left Date:</label>
-                            <input type="date" id="leftDate" class="form-control">
+                            <label>Months:</label>
+                            <select id="salaryMonths" class="form-control" multiple required>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+                            </select>
                         </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Year:</label>
+                        <select id="salaryYear" class="form-control" required>
+                            <option value="">Select Year</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                            <option value="2031">2031</option>
+                            <option value="2032">2032</option>
+                            <option value="2033">2033</option>
+                            <option value="2034">2034</option>
+                            <option value="2035">2035</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-success">Save Teacher Salary Details</button>
                 </form>
@@ -230,7 +394,8 @@
                             <th>Teacher Name</th>
                             <th>Salary Deduct Amount</th>
                             <th>Joining Date</th>
-                            <th>Left Date</th>
+                            <th>Months</th>
+                            <th>Year</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -238,20 +403,37 @@
                 </table>
             </div>
             <div class="user-view">
-                <p>View teacher salary information.</p>
-                <div id="teacherSalaryDisplay"></div>
+                <h4>Teacher Salary List</h4>
+                <table id="teacherSalaryUserTable">
+                    <thead>
+                        <tr>
+                            <th>Teacher Name</th>
+                            <th>Salary Deduct Amount</th>
+                            <th>Joining Date</th>
+                            <th>Months</th>
+                            <th>Year</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
 
         <div class="section" id="skipVoucher">
             <h3><i class="fas fa-receipt"></i> Skip Voucher Students Details</h3>
-            <div class="admin-controls">
+                        <div class="admin-controls">
                 <form id="skipVoucherForm" class="mb-4">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label>Student Name:</label>
                             <input type="text" id="svStudentName" class="form-control" required>
                         </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Father Name:</label>
+                            <input type="text" id="svFatherName" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6 mb-3">
                             <label>Class:</label>
                             <select id="svClass" class="form-control" required>
@@ -269,27 +451,10 @@
                                 <option value="10">10</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label>Paid Months:</label>
-                        <div class="fee-months">
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="January"> <label class="form-check-label">Jan</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="February"> <label class="form-check-label">Feb</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="March"> <label class="form-check-label">Mar</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="April"> <label class="form-check-label">Apr</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="May"> <label class="form-check-label">May</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="June"> <label class="form-check-label">Jun</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="July"> <label class="form-check-label">Jul</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="August"> <label class="form-check-label">Aug</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="September"> <label class="form-check-label">Sep</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="October"> <label class="form-check-label">Oct</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="November"> <label class="form-check-label">Nov</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" name="paidMonth" value="December"> <label class="form-check-label">Dec</label></div>
+                        <div class="col-md-6 mb-3">
+                            <label>Reason:</label>
+                            <input type="text" id="svReason" class="form-control" required>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label>Paid Date:</label>
-                        <input type="date" id="paidDate" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-success">Save Skip Voucher Student</button>
                 </form>
@@ -298,9 +463,9 @@
                     <thead>
                         <tr>
                             <th>Student Name</th>
+                            <th>Father Name</th>
                             <th>Class</th>
-                            <th>Paid Months</th>
-                            <th>Paid Date</th>
+                            <th>Reason</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -308,11 +473,22 @@
                 </table>
             </div>
             <div class="user-view">
-                <p>View skip voucher students information.</p>
-                <div id="skipVoucherDisplay"></div>
-                    </div>
+                <h4>Skip Voucher Students List</h4>
+                <table id="skipVoucherUserTable">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Father Name</th>
+                            <th>Class</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
 
-        <button onclick="logout()" class="btn btn-danger mt-3">Logout</button>
+        <button onclick="logout()" class="btn btn-danger logout-btn">Logout</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -326,6 +502,15 @@
         let remainingAdmissions = JSON.parse(localStorage.getItem('remainingAdmissions')) || [];
         let teacherSalaries = JSON.parse(localStorage.getItem('teacherSalaries')) || [];
         let skipVouchers = JSON.parse(localStorage.getItem('skipVouchers')) || [];
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -370,24 +555,50 @@
         // Admissions
         document.getElementById('admissionForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const feeMonthsSelect = document.getElementById('feeMonths');
+            const selectedMonths = Array.from(feeMonthsSelect.selectedOptions).map(option => option.value);
             const data = {
                 studentName: document.getElementById('studentName').value,
                 fatherName: document.getElementById('fatherName').value,
                 class: document.getElementById('class').value,
                 amount: document.getElementById('amount').value,
                 remainingAmount: document.getElementById('remainingAmount').value,
-                feeMonths: Array.from(document.querySelectorAll('input[name="feeMonth"]:checked')).map(cb => cb.value).join(', '),
+                feeMonths: selectedMonths.join(', '),
+                year: document.getElementById('admissionYear').value,
                 date: document.getElementById('date').value
             };
-            admissions.push(data);
-            localStorage.setItem('admissions', JSON.stringify(admissions));
-            loadAdmissions();
+            const fullPaid = document.getElementById('fullPaid').checked;
+            const remaining = document.getElementById('remaining').checked;
+            if (fullPaid) {
+                admissions.push(data);
+                localStorage.setItem('admissions', JSON.stringify(admissions));
+                loadAdmissions();
+            }
+            if (remaining) {
+                const remData = {
+                    studentName: data.studentName,
+                    fatherName: data.fatherName,
+                    class: data.class,
+                    remainingAmount: data.remainingAmount,
+                    admissionDate: data.date
+                };
+                remainingAdmissions.push(remData);
+                localStorage.setItem('remainingAdmissions', JSON.stringify(remainingAdmissions));
+                loadRemainingAdmissions();
+            }
             this.reset();
         });
 
         function loadAdmissions() {
             const tbody = document.querySelector('#admissionTable tbody');
             tbody.innerHTML = '';
+            const userTbody = document.querySelector('#admissionUserTable tbody');
+            userTbody.innerHTML = '';
+            if (admissions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="no-data">No data available.</td></tr>';
+                userTbody.innerHTML = '<tr><td colspan="8" class="no-data">No data available.</td></tr>';
+                return;
+            }
             admissions.forEach((ad, index) => {
                 const row = `<tr>
                     <td>${ad.studentName}</td>
@@ -396,17 +607,26 @@
                     <td>${ad.amount}</td>
                     <td>${ad.remainingAmount}</td>
                     <td>${ad.feeMonths}</td>
-                    <td>${ad.date}</td>
+                    <td>${ad.year}</td>
+                    <td>${formatDate(ad.date)}</td>
                     <td>
                         ${currentRole === 'Admin' ? `<button class="btn btn-warning btn-sm" onclick="editAdmission(${index})">Edit</button>
                         <button class="btn btn-danger btn-sm" onclick="deleteAdmission(${index})">Delete</button>` : ''}
                     </td>
                 </tr>`;
                 tbody.innerHTML += row;
+                const userRow = `<tr>
+                    <td>${ad.studentName}</td>
+                    <td>${ad.fatherName}</td>
+                    <td>${ad.class}</td>
+                    <td>${ad.amount}</td>
+                    <td>${ad.remainingAmount}</td>
+                    <td>${ad.feeMonths}</td>
+                    <td>${ad.year}</td>
+                    <td>${formatDate(ad.date)}</td>
+                </tr>`;
+                userTbody.innerHTML += userRow;
             });
-            // For user view
-            const display = document.getElementById('admissionDisplay');
-            display.innerHTML = admissions.length ? admissions.map(ad => `<p><strong>Student:</strong> ${ad.studentName}, <strong>Class:</strong> ${ad.class}, <strong>Amount:</strong> ${ad.amount}</p>`).join('') : '<p>No data available.</p>';
         }
 
         function editAdmission(index) {
@@ -416,8 +636,14 @@
             document.getElementById('class').value = ad.class;
             document.getElementById('amount').value = ad.amount;
             document.getElementById('remainingAmount').value = ad.remainingAmount;
+            document.getElementById('admissionYear').value = ad.year;
             document.getElementById('date').value = ad.date;
-            // Note: For checkboxes, you may need to split ad.feeMonths and check them
+            // Set selected months
+            const feeMonthsSelect = document.getElementById('feeMonths');
+            const selectedMonths = ad.feeMonths.split(', ').filter(m => m);
+            Array.from(feeMonthsSelect.options).forEach(option => {
+                option.selected = selectedMonths.includes(option.value);
+            });
             admissions.splice(index, 1);
             localStorage.setItem('admissions', JSON.stringify(admissions));
         }
@@ -447,23 +673,35 @@
         function loadRemainingAdmissions() {
             const tbody = document.querySelector('#remainingAdmissionTable tbody');
             tbody.innerHTML = '';
+            const userTbody = document.querySelector('#remainingAdmissionUserTable tbody');
+            userTbody.innerHTML = '';
+            if (remainingAdmissions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="no-data">No data available.</td></tr>';
+                userTbody.innerHTML = '<tr><td colspan="5" class="no-data">No data available.</td></tr>';
+                return;
+            }
             remainingAdmissions.forEach((ad, index) => {
                 const row = `<tr>
                     <td>${ad.studentName}</td>
                     <td>${ad.fatherName}</td>
                     <td>${ad.class}</td>
                     <td>${ad.remainingAmount}</td>
-                    <td>${ad.admissionDate}</td>
+                    <td>${formatDate(ad.admissionDate)}</td>
                     <td>
                         ${currentRole === 'Admin' ? `<button class="btn btn-warning btn-sm" onclick="editRemainingAdmission(${index})">Edit</button>
                         <button class="btn btn-danger btn-sm" onclick="deleteRemainingAdmission(${index})">Delete</button>` : ''}
                     </td>
                 </tr>`;
                 tbody.innerHTML += row;
+                const userRow = `<tr>
+                    <td>${ad.studentName}</td>
+                    <td>${ad.fatherName}</td>
+                    <td>${ad.class}</td>
+                    <td>${ad.remainingAmount}</td>
+                    <td>${formatDate(ad.admissionDate)}</td>
+                </tr>`;
+                userTbody.innerHTML += userRow;
             });
-            // For user view
-            const display = document.getElementById('remainingAdmissionDisplay');
-            display.innerHTML = remainingAdmissions.length ? remainingAdmissions.map(ad => `<p><strong>Student:</strong> ${ad.studentName}, <strong>Class:</strong> ${ad.class}, <strong>Remaining:</strong> ${ad.remainingAmount}</p>`).join('') : '<p>No data available.</p>';
         }
 
         function editRemainingAdmission(index) {
@@ -486,11 +724,14 @@
         // Teacher Salaries
         document.getElementById('teacherSalaryForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const salaryMonthsSelect = document.getElementById('salaryMonths');
+            const selectedMonths = Array.from(salaryMonthsSelect.selectedOptions).map(option => option.value);
             const data = {
                 teacherName: document.getElementById('teacherName').value,
                 salaryDeductAmount: document.getElementById('salaryDeductAmount').value,
                 joiningDate: document.getElementById('joiningDate').value,
-                leftDate: document.getElementById('leftDate').value
+                months: selectedMonths.join(', '),
+                year: document.getElementById('salaryYear').value
             };
             teacherSalaries.push(data);
             localStorage.setItem('teacherSalaries', JSON.stringify(teacherSalaries));
@@ -501,22 +742,35 @@
         function loadTeacherSalaries() {
             const tbody = document.querySelector('#teacherSalaryTable tbody');
             tbody.innerHTML = '';
+            const userTbody = document.querySelector('#teacherSalaryUserTable tbody');
+            userTbody.innerHTML = '';
+            if (teacherSalaries.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="no-data">No data available.</td></tr>';
+                userTbody.innerHTML = '<tr><td colspan="5" class="no-data">No data available.</td></tr>';
+                return;
+            }
             teacherSalaries.forEach((ts, index) => {
                 const row = `<tr>
                     <td>${ts.teacherName}</td>
                     <td>${ts.salaryDeductAmount}</td>
-                    <td>${ts.joiningDate}</td>
-                    <td>${ts.leftDate || 'N/A'}</td>
+                    <td>${formatDate(ts.joiningDate)}</td>
+                    <td>${ts.months}</td>
+                    <td>${ts.year}</td>
                     <td>
                         ${currentRole === 'Admin' ? `<button class="btn btn-warning btn-sm" onclick="editTeacherSalary(${index})">Edit</button>
                         <button class="btn btn-danger btn-sm" onclick="deleteTeacherSalary(${index})">Delete</button>` : ''}
                     </td>
                 </tr>`;
                 tbody.innerHTML += row;
+                const userRow = `<tr>
+                    <td>${ts.teacherName}</td>
+                    <td>${ts.salaryDeductAmount}</td>
+                    <td>${formatDate(ts.joiningDate)}</td>
+                    <td>${ts.months}</td>
+                    <td>${ts.year}</td>
+                </tr>`;
+                userTbody.innerHTML += userRow;
             });
-            // For user view
-            const display = document.getElementById('teacherSalaryDisplay');
-            display.innerHTML = teacherSalaries.length ? teacherSalaries.map(ts => `<p><strong>Teacher:</strong> ${ts.teacherName}, <strong>Deduct:</strong> ${ts.salaryDeductAmount}</p>`).join('') : '<p>No data available.</p>';
         }
 
         function editTeacherSalary(index) {
@@ -524,7 +778,13 @@
             document.getElementById('teacherName').value = ts.teacherName;
             document.getElementById('salaryDeductAmount').value = ts.salaryDeductAmount;
             document.getElementById('joiningDate').value = ts.joiningDate;
-            document.getElementById('leftDate').value = ts.leftDate;
+            document.getElementById('salaryYear').value = ts.year;
+            // Set selected months
+            const salaryMonthsSelect = document.getElementById('salaryMonths');
+            const selectedMonths = ts.months.split(', ').filter(m => m);
+            Array.from(salaryMonthsSelect.options).forEach(option => {
+                option.selected = selectedMonths.includes(option.value);
+            });
             teacherSalaries.splice(index, 1);
             localStorage.setItem('teacherSalaries', JSON.stringify(teacherSalaries));
         }
@@ -540,9 +800,9 @@
             e.preventDefault();
             const data = {
                 studentName: document.getElementById('svStudentName').value,
+                fatherName: document.getElementById('svFatherName').value,
                 class: document.getElementById('svClass').value,
-                paidMonths: Array.from(document.querySelectorAll('input[name="paidMonth"]:checked')).map(cb => cb.value).join(', '),
-                paidDate: document.getElementById('paidDate').value
+                reason: document.getElementById('svReason').value
             };
             skipVouchers.push(data);
             localStorage.setItem('skipVouchers', JSON.stringify(skipVouchers));
@@ -553,46 +813,47 @@
         function loadSkipVouchers() {
             const tbody = document.querySelector('#skipVoucherTable tbody');
             tbody.innerHTML = '';
+            const userTbody = document.querySelector('#skipVoucherUserTable tbody');
+            userTbody.innerHTML = '';
+            if (skipVouchers.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="no-data">No data available.</td></tr>';
+                userTbody.innerHTML = '<tr><td colspan="4" class="no-data">No data available.</td></tr>';
+                return;
+            }
             skipVouchers.forEach((sv, index) => {
                 const row = `<tr>
                     <td>${sv.studentName}</td>
+                    <td>${sv.fatherName}</td>
                     <td>${sv.class}</td>
-                    <td>${sv.paidMonths}</td>
-                    <td>${sv.paidDate}</td>
+                    <td>${sv.reason}</td>
                     <td>
                         ${currentRole === 'Admin' ? `<button class="btn btn-warning btn-sm" onclick="editSkipVoucher(${index})">Edit</button>
                         <button class="btn btn-danger btn-sm" onclick="deleteSkipVoucher(${index})">Delete</button>` : ''}
                     </td>
                 </tr>`;
                 tbody.innerHTML += row;
+                const userRow = `<tr>
+                    <td>${sv.studentName}</td>
+                    <td>${sv.fatherName}</td>
+                    <td>${sv.class}</td>
+                    <td>${sv.reason}</td>
+                </tr>`;
+                userTbody.innerHTML += userRow;
             });
-            // For user view
-            const display = document.getElementById('skipVoucherDisplay');
-            display.innerHTML = skipVouchers.length ? skipVouchers.map(sv => `<p><strong>Student:</strong> ${sv.studentName}, <strong>Class:</strong> ${sv.class}, <strong>Paid Months:</strong> ${sv.paidMonths}</p>`).join('') : '<p>No data available.</p>';
         }
 
         function editSkipVoucher(index) {
             const sv = skipVouchers[index];
             document.getElementById('svStudentName').value = sv.studentName;
+            document.getElementById('svFatherName').value = sv.fatherName;
             document.getElementById('svClass').value = sv.class;
-            document.getElementById('paidDate').value = sv.paidDate;
-            // Note: For checkboxes, you may need to split sv.paidMonths and check them
+            document.getElementById('svReason').value = sv.reason;
             skipVouchers.splice(index, 1);
             localStorage.setItem('skipVouchers', JSON.stringify(skipVouchers));
         }
 
         function deleteSkipVoucher(index) {
-            skipVouchers.splice(index, 1);
-            localStorage.setItem('skipVouchers', JSON.stringify(skipVouchers));
-            loadSkipVouchers();
-        }
-
-        function loadData(sectionId) {
-            if (sectionId === 'newAdmission') loadAdmissions();
-            else if (sectionId === 'remainingAdmission') loadRemainingAdmissions();
-            else if (sectionId === 'teacherSalary') loadTeacherSalaries();
-            else if (sectionId === 'skipVoucher') loadSkipVouchers();
-        }
-    </script>
+            skipVouchers.splice(index)}
+                </script>
 </body>
 </html>
